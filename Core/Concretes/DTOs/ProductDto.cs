@@ -11,16 +11,4 @@
         public int Quantity { get; set; }
         public DateTime LastUpdatedTime { get; set; }
     }
-
-    public class CategoryDto
-    {
-        public int Id { get; set; }
-        public string Name { get; set; } = null!;
-    }
-
-    public class BrandDto
-    {
-        public int Id { get; set; }
-        public string Name { get; set; } = null!;
-    }
 }

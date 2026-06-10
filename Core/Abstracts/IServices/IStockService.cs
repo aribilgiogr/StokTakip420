@@ -1,17 +1,13 @@
 ﻿using Core.Concretes.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Abstracts.IServices
 {
-    public interface IProductService
+
+    public interface IStockService
     {
-        Task<ProductDto> GetAsync(int id);
-        Task<IEnumerable<ProductDto>> GetAllAsync();
-        Task<IEnumerable<ProductDto>> GetAllByCategory(int categoryId);
-        Task<IEnumerable<ProductDto>> GetAllByBrand(int brandId);
+        Task InboundStockAsync(int productId, int quantity = 1);
+        Task OutboundStockAsync(int productId, int quantity = 1);
+        Task<IEnumerable<StockDetailDto>> GetAllStockMovements();
+        Task<IEnumerable<StockDetailDto>> GetAllStockMovementsForProduct(int productId);
     }
 }
