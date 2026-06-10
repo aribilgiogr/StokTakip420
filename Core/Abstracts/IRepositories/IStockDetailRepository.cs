@@ -3,5 +3,5 @@ using Core.Concretes.Entities;
 
 namespace Core.Abstracts.IRepositories
 {
-    public interface IProductRepository : IRepository<Product> { }
+    public interface IStockDetailRepository : IRepository<StockDetail> { }
 }
