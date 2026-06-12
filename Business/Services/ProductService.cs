@@ -1,7 +1,6 @@
 ﻿using Core.Abstracts;
 using Core.Abstracts.IServices;
 using Core.Concretes.DTOs;
-using Core.Concretes.Entities;
 
 namespace Business.Services
 {
