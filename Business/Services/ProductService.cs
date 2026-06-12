@@ -1,6 +1,7 @@
 ﻿using Core.Abstracts;
 using Core.Abstracts.IServices;
 using Core.Concretes.DTOs;
+using Core.Concretes.Entities;
 
 namespace Business.Services
 {
@@ -11,6 +12,30 @@ namespace Business.Services
         public ProductService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
+        }
+
+        public async Task AddAsync(NewProductDto newProduct)
+        {
+            Product product = new Product
+            {
+                Name = newProduct.Name,
+                BrandId = newProduct.BrandId,
+                CategoryId = newProduct.CategoryId,
+                Quantity = newProduct.Quantity,
+                Description = newProduct.Description
+            };
+
+            await unitOfWork.Products.CreateAsync(product);
+            await unitOfWork.CommitAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var product = await unitOfWork.Products.FindOneAsync(id);
+            if (product != null)
+            {
+                await unitOfWork.Products.DeleteAsync(product);
+            }
         }
 
         public async Task<IEnumerable<ProductDto>> GetAllAsync()
@@ -82,6 +107,11 @@ namespace Business.Services
                 };
             }
             return null;
+        }
+
+        public Task UpdateAsync(int id, NewProductDto updatedProduct)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -20,16 +20,24 @@ namespace API.Controllers
 
         // GET: api/<ProductsController>
         [HttpGet]
-        public async Task<IEnumerable<ProductDto>> Get()
+        public async Task<IActionResult> Get()
         {
-            return await service.GetAllAsync();
+            return Ok(await service.GetAllAsync());
         }
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            var product = await service.GetAsync(id);
+            if (product != null)
+            {
+                return Ok(product);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // POST api/<ProductsController>
