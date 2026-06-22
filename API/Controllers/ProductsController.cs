@@ -36,26 +36,60 @@ namespace API.Controllers
             }
             else
             {
-                return NotFound();
+                return NotFound(); // 404 Not Found Error
             }
         }
 
         // POST api/<ProductsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] NewProductDto newProduct)
         {
+            try
+            {
+                await service.AddAsync(newProduct);
+                return Ok(newProduct);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message); // 400 Bad Request Error
+            }
         }
 
         // PUT api/<ProductsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] NewProductDto updatedProduct)
         {
+            if (await service.GetAsync(id) != null)
+            {
+                try
+                {
+                    await service.UpdateAsync(id, updatedProduct);
+                    return Ok(updatedProduct);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // DELETE api/<ProductsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            if (await service.GetAsync(id) != null)
+            {
+                await service.DeleteAsync(id);
+                return NoContent(); // 204 No Content
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }
